@@ -148,7 +148,7 @@
 
 <style>
   .header {
-    height: 10%;
+    height: 6%;
   }
 
   .body {
