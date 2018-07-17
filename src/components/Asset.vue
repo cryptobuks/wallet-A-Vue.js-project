@@ -10,7 +10,7 @@
   </div>
 </template>
 <script>
-  import httpUtils from '../util/HttpUtils'
+  import TGCoinHttpUtils from '../util/TGCoinHttpUtils'
 
   export default {
     name: 'page-tabbar',
@@ -20,7 +20,7 @@
       };
     }, created: function () {
       const _this = this;
-      httpUtils.post("/api/getBalance", "")
+      TGCoinHttpUtils.post("/api/getBalance", "0x10458298a51e19f676cb42302c63382b7ad594c1")
         .then(function (res) {
           console.log(res.data);
           _this.balance = res.data;
