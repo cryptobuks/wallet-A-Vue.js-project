@@ -33,7 +33,7 @@
   }
 </style>
 <script>
-  import {Toast} from 'mint-ui';
+  import {Toast} from 'mint-ui'
   import TGCoinHttpUtils from '../util/TGCoinHttpUtils'
 
   export default {
@@ -72,18 +72,14 @@
         });
 
         if (isSuccess) {
-          TGCoinHttpUtils.post('/app/api/register', this.input)
-            .then(function (res) {
-              console.log(res);
-              if (res.data.code === 100) {
-                Toast('注册成功');
-                localStorage.setItem('sessionKey', 'as');
-                router.push('/Home');
-              }
-            })
-            .catch(function (err) {
-              console.log(err)
-            });
+          TGCoinHttpUtils.post('/app/api/register', this.input).then(function (res) {
+            console.log(res);
+            if (res.code === 100) {
+              localStorage.setItem('sessionKey', 'as');
+              router.push("/Home");
+            }
+          })
+
         }
       },
       checkRule(type) {

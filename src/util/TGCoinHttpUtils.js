@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {Toast} from 'mint-ui'
 import Qs from 'qs'
 
 let TGCoinHttpUtils = {
@@ -34,7 +35,17 @@ let TGCoinHttpUtils = {
       //返回数据类型
       responseType: 'json', // default
     };
-    return axios.post(url, request, config)
+
+    return axios.post(url, request, config).then(function (res) {
+      if (res.data.code !== 100) {
+        Toast("[" + res.data.code + "] " + res.data.msg);
+      }
+      return res.data;
+    })
+      .catch(function (err) {
+        console.log(err);
+        Toast("出错了！");
+      });
   }
 
 };
