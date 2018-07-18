@@ -20,7 +20,7 @@
       };
     }, created: function () {
       const _this = this;
-      TGCoinHttpUtils.post("/api/getBalance", "0x10458298a51e19f676cb42302c63382b7ad594c1")
+      TGCoinHttpUtils.post("/wallet/api/getBalance", {address: "0x10458298a51e19f676cb42302c63382b7ad594c1"})
         .then(function (res) {
           console.log(res.data);
           _this.balance = res.data;

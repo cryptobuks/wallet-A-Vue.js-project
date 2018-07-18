@@ -26,7 +26,7 @@
               </mt-cell>
             </div>
             <div class="sing-out">
-                <mt-button type="danger" @click="logout()" class="logout-button">退出</mt-button>
+                <mt-button type="danger" @click="logout()" class="button">退出</mt-button>
             </div>
           </mt-tab-container-item>
         </mt-tab-container>
@@ -114,7 +114,7 @@
   .sing-out {
     padding-top: 93%;
   }
-  .logout-button{
+  .button{
     width: 250px;
   }
 </style>

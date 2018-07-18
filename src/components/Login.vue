@@ -2,8 +2,8 @@
   <div id="login-form">
     <h1 id="login-header">感恩链</h1>
     <div id="filed-form">
-      <mt-field label="账号：" state="success" v-model="username"></mt-field>
-      <mt-field label="密码：" state="success" v-model="password" type="password"></mt-field>
+      <mt-field label="账号：" v-model="username"></mt-field>
+      <mt-field label="密码：" v-model="password" type="password"></mt-field>
     </div>
     <div id="filed-submit">
       <mt-button type="primary" id="login-button" @click="login()">登录</mt-button>
@@ -41,6 +41,7 @@
 </style>
 <script>
   import {Toast} from 'mint-ui';
+  import TGCoinHttpUtils from '../util/TGCoinHttpUtils'
 
   export default {
     name: 'login',
@@ -52,9 +53,18 @@
       };
     }, methods: {
       login() {
-        Toast('登录成功');
-        localStorage.setItem('sessionKey', 'as');
-        this.$router.push('/Home');
+        let router = this.$router;
+        TGCoinHttpUtils.post("/app/api/login", {userName: this.username, password: this.password})
+          .then(function (res) {
+            localStorage.setItem('sessionKey', 'as');
+            router.push('/Home');
+          })
+          .catch(function (err) {
+            Toast(err)
+            return false;
+          });
+
+
       }
     }
   }

@@ -21,7 +21,7 @@
       <span style="color: #b5b5b5">60秒后重新获取</span>
     </mt-field>
     <div class="submit">
-      <mt-button type="primary" size="large" @click="register">下一步</mt-button>
+      <mt-button type="primary" @click="register" class="button">下一步</mt-button>
     </div>
   </div>
 </template>
@@ -30,6 +30,9 @@
     margin-top: 20%;
   }
 
+  .button {
+    width: 250px;
+  }
 </style>
 <script>
   import {Toast} from 'mint-ui';
