@@ -69,11 +69,17 @@
             if (/^[a-zA-Z0-9]{4,20}$/.test(this.username)) {
               ret = 'success'
             }
+            if (this.username.length === 0) {
+              ret = ''
+            }
             this.state.username = ret;
             break;
           case 'email':
             if (/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(this.email)) {
               ret = 'success'
+            }
+            if (this.email.length === 0) {
+              ret = ''
             }
             this.state.email = ret;
             break;
@@ -81,17 +87,26 @@
             if (/^[a-zA-Z0-9]{6,20}$/.test(this.password)) {
               ret = 'success'
             }
+            if (this.password.length === 0) {
+              ret = ''
+            }
             this.state.password = ret;
             break;
           case 'phone':
             if (/^[0-9]{11,20}$/.test(this.phone)) {
               ret = 'success'
             }
+            if (this.phone.length === 0) {
+              ret = ''
+            }
             this.state.phone = ret;
             break;
           case 'captcha':
             if (/^[0-9]{6}$/.test(this.captcha)) {
               ret = 'success'
+            }
+            if (this.captcha.length === 0) {
+              ret = ''
             }
             this.state.captcha = ret;
             break;
