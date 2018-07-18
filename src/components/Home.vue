@@ -8,11 +8,6 @@
         <mt-tab-container class="page-tabbar-container" v-model="selected">
           <mt-tab-container-item id="资产">
             <asset></asset>
-            <div>
-              您的收款二维码：
-              <vue-q-art :config="config"></vue-q-art>
-            </div>
-
           </mt-tab-container-item>
           <mt-tab-container-item id="转入">
 
@@ -31,10 +26,7 @@
               </mt-cell>
             </div>
             <div class="sing-out">
-              <router-link to="/">
-                <!-- button -->
-                <mt-button type="danger" size="large">退出</mt-button>
-              </router-link>
+                <mt-button type="danger" @click="logout()" class="logout-button">退出</mt-button>
             </div>
           </mt-tab-container-item>
         </mt-tab-container>
@@ -66,7 +58,7 @@
   import VueQArt from 'vue-qart'
 
   export default {
-    name: 'page-tabbar',
+    name: 'home',
     data() {
       return {
         selected: '资产',
@@ -81,7 +73,12 @@
     }, components: {
       asset,
       VueQArt
-    },
+    }, methods: {
+      logout() {
+        localStorage.removeItem('sessionKey');
+        this.$router.push('/Login');
+      }
+    }
   }
 </script>
 
@@ -117,18 +114,7 @@
   .sing-out {
     padding-top: 93%;
   }
-
-  .item {
-    display: inline-block;
-  }
-
-  .nav {
-    padding: 10px;
-  }
-
-  .link {
-    color: inherit;
-    padding: 20px;
-    display: block;
+  .logout-button{
+    width: 250px;
   }
 </style>

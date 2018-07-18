@@ -1,5 +1,5 @@
 <template>
-  <div class="page-part">
+  <div id="asset">
     <mt-cell class="cell"
              title="TG-COIN"
              to=""
@@ -13,7 +13,7 @@
   import TGCoinHttpUtils from '../util/TGCoinHttpUtils'
 
   export default {
-    name: 'page-tabbar',
+    name: 'asset',
     data() {
       return {
         balance: 0,

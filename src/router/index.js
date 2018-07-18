@@ -7,9 +7,11 @@ import {TabContainer, TabContainerItem} from 'mint-ui';
 import {Button} from 'mint-ui';
 import {Cell} from 'mint-ui';
 import {Header} from 'mint-ui';
+import {Field} from 'mint-ui';
 
 Vue.use(Router);
 
+Vue.component(Field.name, Field);
 Vue.component(Header.name, Header);
 Vue.component(Tabbar.name, Tabbar);
 Vue.component(TabItem.name, TabItem);
@@ -22,6 +24,10 @@ const router = new Router({
   routes: [
     {
       path: '/',
+      redirect: '/Home',
+    },
+    {
+      path: '/Home',
       name: 'Home',
       component: Home,
     },
@@ -36,15 +42,14 @@ const router = new Router({
   ]
 });
 
-//  判断是否需要登录权限 以及是否登录
+// 判断是否需要登录权限 以及是否登录
 router.beforeEach((to, from, next) => {
   if (!to.matched.some(res => res.meta.unNeedAuth)) {// 判断是否需要登录权限
-    if (localStorage.getItem('username')) {// 判断是否登录
+    if (localStorage.getItem('sessionKey')) {// 判断是否登录
       next()
     } else {// 没登录则跳转到登录界面
       next({
-        path: '/Login',
-        query: {redirect: to.fullPath}
+        path: '/Login'
       })
     }
   } else {
