@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Login from '@/components/Login'
+import Register from '@/components/Register'
 import {Tabbar, TabItem} from 'mint-ui';
 import {TabContainer, TabContainerItem} from 'mint-ui';
 import {Button} from 'mint-ui';
@@ -35,6 +36,14 @@ const router = new Router({
       path: '/Login',
       name: 'Login',
       component: Login,
+      meta: {
+        unNeedAuth: true
+      }
+    },
+    {
+      path: '/Register',
+      name: 'Register',
+      component: Register,
       meta: {
         unNeedAuth: true
       }

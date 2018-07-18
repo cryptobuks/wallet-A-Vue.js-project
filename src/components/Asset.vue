@@ -1,5 +1,5 @@
 <template>
-  <div id="asset">
+  <div class="page-part">
     <mt-cell class="cell"
              title="TG-COIN"
              to=""

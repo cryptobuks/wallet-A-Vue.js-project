@@ -1,23 +1,46 @@
 <template>
   <div id="login-form">
-    <mt-field label="账号：" class="form" state="success" v-model="username"></mt-field>
-    <mt-field label="密码：" class="form" state="success" v-model="password" type="password"></mt-field>
-    <mt-button type="primary" id="login-button" @click="login()">登录</mt-button>
+    <h1 id="login-header">感恩链</h1>
+    <div id="filed-form">
+      <mt-field label="账号：" state="success" v-model="username"></mt-field>
+      <mt-field label="密码：" state="success" v-model="password" type="password"></mt-field>
+    </div>
+    <div id="filed-submit">
+      <mt-button type="primary" id="login-button" @click="login()">登录</mt-button>
+    </div>
+    <div id="to-register">
+      <router-link to="/Register">没有账号？去注册</router-link>
+    </div>
   </div>
 </template>
 <style>
-  #login-form {
-    position: relative;
-    padding-top: 50%;
+  #login-header {
+    margin-top: 30%;
   }
 
   #login-button {
-    margin-top: 10%;
     width: 250px;
   }
+
+  #filed-form {
+    margin-top: 20%;
+  }
+
+  #filed-submit {
+    margin-top: 10%;
+  }
+
+  #to-register {
+    margin-top: 10%;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
 </style>
 <script>
-  import { Toast } from 'mint-ui';
+  import {Toast} from 'mint-ui';
 
   export default {
     name: 'login',
@@ -30,7 +53,7 @@
     }, methods: {
       login() {
         Toast('登录成功');
-        localStorage.setItem('sessionKey','as');
+        localStorage.setItem('sessionKey', 'as');
         this.$router.push('/Home');
       }
     }
