@@ -6,16 +6,16 @@
       </router-link>
     </mt-header>
 
-    <mt-field label="账号" placeholder="请输入账号" v-model="input.username" :state="state.username"
-              @input="checkRule('username')"></mt-field>
-    <mt-field label="手机号" placeholder="请输入手机号" type="number" v-model="input.phone" :state="state.phone"
-              @input="checkRule('phone')"></mt-field>
-    <mt-field label="验证码" placeholder="请输入6位的验证码" v-model="input.captcha" type="number" :state="state.captcha"
-              @input="checkRule('captcha')">
+    <mt-field label="账号" placeholder="请输入账号" v-model="input.username"
+              :state="state.username|checkRule(input.username,'username')"></mt-field>
+    <mt-field label="手机号" placeholder="请输入手机号" type="number" v-model="input.phone"
+              :state="state.phone|checkRule(input.phone,'phone')"></mt-field>
+    <mt-field label="验证码" placeholder="请输入6位的验证码" v-model="input.captcha" type="number"
+              :state="state.captcha|checkRule(input.captcha,'captcha')">
       <span style="color: #b5b5b5" @click="sendCode">点击获取</span>
     </mt-field>
-    <mt-field label="密码" placeholder="请输入6位或以上的密码" type="password" v-model="input.password" :state="state.password"
-              @input="checkRule('password')"></mt-field>
+    <mt-field label="密码" placeholder="请输入6位或以上的密码" type="password" v-model="input.password"
+              :state="state.password|checkRule(input.password,'password')"></mt-field>
 
     <div class="submit">
       <mt-button type="primary" @click="register" class="button">下一步</mt-button>
@@ -51,12 +51,6 @@
           phone: "",
           password: "",
           captcha: "",
-        },
-        roules: {
-          username: /^[a-zA-Z0-9]{4,20}$/,
-          phone: /^[0-9]{11,20}$/,
-          password: /^[a-zA-Z0-9]{6,20}$/,
-          captcha: /^[0-9]{6}$/,
         }
       };
     }, methods: {
@@ -79,24 +73,7 @@
               router.push("/Home");
             }
           })
-
         }
-      },
-      checkRule(type) {
-        let data = this.input;
-        let state = this.state;
-        let roules = this.roules;
-        let ret = 'error';
-        Object.keys(roules).forEach(function (key) {
-          if (key === type && roules[key].test(data[type])) {
-            ret = 'success';
-            return true;
-          }
-        });
-        if (data[type].length === 0) {
-          ret = ''
-        }
-        state[type] = ret
       },
       sendCode() {
         Toast('您正在注册感恩链账号，验证码为123456');

@@ -5,6 +5,7 @@ import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import App from './App'
 import router from './router'
+import CheckRules from './filter/CheckRules'
 
 Vue.config.productionTip = false
 
