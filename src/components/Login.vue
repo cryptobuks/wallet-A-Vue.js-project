@@ -6,7 +6,7 @@
       <mt-field label="密码：" v-model="password" type="password"></mt-field>
     </div>
     <div id="filed-submit">
-      <mt-button type="primary" id="login-button" @click="login()">登录</mt-button>
+      <mt-button type="primary" class="button" @click="login()">登录</mt-button>
     </div>
     <div id="to-register">
       <router-link to="/Register">没有账号？去注册</router-link>
@@ -16,10 +16,6 @@
 <style>
   #login-header {
     margin-top: 30%;
-  }
-
-  #login-button {
-    width: 250px;
   }
 
   #filed-form {
@@ -38,33 +34,40 @@
     text-decoration: none;
   }
 
+  .mint-cell:last-child {
+    background-image: none;
+  }
 </style>
 <script>
   import {Toast} from 'mint-ui';
   import TGCoinHttpUtils from '../util/TGCoinHttpUtils'
+  import RegexRoules from '../util/constants/RegexRoules'
 
   export default {
     name: 'login',
     data() {
       return {
-        balance: 0,
         username: "",
         password: ""
       };
     }, methods: {
       login() {
+
+        if (!RegexRoules.username.test(this.username)) {
+          Toast('账号格式不正确');
+          return false;
+        }
+        if (!RegexRoules.password.test(this.password)) {
+          Toast('密码格式不正确');
+          return false;
+        }
+
         let router = this.$router;
-        TGCoinHttpUtils.post("/app/api/login", {userName: this.username, password: this.password})
+        TGCoinHttpUtils.post("/user/api/login", {userName: this.username, password: this.password})
           .then(function (res) {
-            localStorage.setItem('sessionKey', 'as');
+            localStorage.setItem('sessionKey', res.data);
             router.push('/Home');
-          })
-          .catch(function (err) {
-            Toast(err)
-            return false;
           });
-
-
       }
     }
   }

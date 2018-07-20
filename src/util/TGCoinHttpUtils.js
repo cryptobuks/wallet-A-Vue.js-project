@@ -38,13 +38,16 @@ let TGCoinHttpUtils = {
 
     return axios.post(url, request, config).then(function (res) {
       if (res.data.code !== 100) {
-        Toast("[" + res.data.code + "] " + res.data.msg);
+        let err = "[" + res.data.code + "] " + res.data.msg;
+        Toast(err);
+        return Promise.reject(err);
       }
       return res.data;
     })
-      .catch(function (err) {
+      .catch((err) => {
         console.log(err);
-        Toast("出错了！");
+        Toast(err);
+        return Promise.reject(err);
       });
   }
 

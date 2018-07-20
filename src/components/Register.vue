@@ -27,14 +27,11 @@
   .submit {
     margin-top: 20%;
   }
-
-  .button {
-    width: 250px;
-  }
 </style>
 <script>
   import {Toast} from 'mint-ui'
   import TGCoinHttpUtils from '../util/TGCoinHttpUtils'
+  import RegexRoules from '../util/constants/RegexRoules'
 
   export default {
     name: 'register',
@@ -55,23 +52,22 @@
       };
     }, methods: {
       register() {
-        let stateMap = this.state;
+        let inputMap = this.input;
+        console.log(this.state);
         let router = this.$router;
         let isSuccess = true;
-        Object.keys(stateMap).forEach(function (key) {
-          if (stateMap[key] === '' || stateMap[key] !== 'success') {
-            Toast('请核对信息再提交');
+        Object.keys(inputMap).forEach(function (key) {
+          if (!RegexRoules[key].test(inputMap[key])) {
+            Toast(RegexRoules['desc'][key] + '信息格式有误，请核对后再提交');
             isSuccess = false;
+            throw new Error('格式有误')
           }
         });
 
         if (isSuccess) {
-          TGCoinHttpUtils.post('/app/api/register', this.input).then(function (res) {
-            console.log(res);
-            if (res.code === 100) {
-              localStorage.setItem('sessionKey', 'as');
-              router.push("/Home");
-            }
+          TGCoinHttpUtils.post('/user/api/register', this.input).then(function (res) {
+            localStorage.setItem('sessionKey', res.data);
+            router.push("/Home");
           })
         }
       },
