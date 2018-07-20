@@ -25,9 +25,6 @@
           console.log(res.data);
           _this.balance = res.data;
         })
-        .catch(function (err) {
-          console.log(err)
-        })
     }
   }
 </script>

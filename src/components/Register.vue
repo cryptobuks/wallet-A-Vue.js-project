@@ -66,7 +66,8 @@
 
         if (isSuccess) {
           TGCoinHttpUtils.post('/user/api/register', this.input).then(function (res) {
-            localStorage.setItem('sessionKey', res.data);
+            localStorage.setItem('uid', res.data.uid);
+            localStorage.setItem('token', res.data.token);
             router.push("/Home");
           })
         }

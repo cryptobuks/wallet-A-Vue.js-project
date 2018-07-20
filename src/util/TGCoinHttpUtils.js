@@ -1,10 +1,16 @@
 import axios from 'axios'
 import {Toast} from 'mint-ui'
 import Qs from 'qs'
+import Vue from 'vue'
+import router from '../router/index'
+let vue = new Vue({router});
 
 let TGCoinHttpUtils = {
   post: function (url, request) {
-    axios.defaults.headers.post['Content-Type'] = 'application/json';
+    // axios.defaults.headers.post['Content-Type'] = 'application/json';
+    // axios.defaults.headers.post['uid'] = localStorage.getItem('uid');
+    // axios.defaults.headers.post['token'] = localStorage.getItem('token');
+
     let config = {
       //请求的接口，在请求的时候，如axios.get(url,config);这里的url会覆盖掉config中的url
       url: url,
@@ -17,12 +23,16 @@ let TGCoinHttpUtils = {
       //   request = Qs.stringify({});
       //   return data;
       // }],
-      transformResponse: [function (data) {
-        // 这里提前处理返回的数据
-        return data;
-      }],
+      // transformResponse: [function (data) {
+      //   // 这里提前处理返回的数据
+      //   return data;
+      // }],
       // 请求头信息
-      headers: {'X-Requested-With': 'XMLHttpRequest'},
+      headers: {
+        'Content-Type': 'application/json',
+        'uid': localStorage.getItem('uid'),
+        'token': localStorage.getItem('token'),
+      },
       //parameter参数
       // params: {
       //   timestamp: Date.parse(new Date()) / 1000,
@@ -34,20 +44,32 @@ let TGCoinHttpUtils = {
       timeout: 5000,
       //返回数据类型
       responseType: 'json', // default
+      validateStatus: function (status) {
+        return status >= 200 && status < 550; // default
+      },
     };
 
     return axios.post(url, request, config).then(function (res) {
+
+      if (res.status === 401) {
+        vue.$router.push("/Login");
+        Toast("请重新登录");
+        localStorage.removeItem("token");
+        localStorage.removeItem("uid");
+        return Promise.reject("请重新登录");
+      }
+
       if (res.data.code !== 100) {
         let err = "[" + res.data.code + "] " + res.data.msg;
         Toast(err);
         return Promise.reject(err);
       }
-      return res.data;
+      return res.data.data;
     })
-      .catch((err) => {
-        console.log(err);
-        Toast(err);
-        return Promise.reject(err);
+      .catch(error => {
+        console.log(error);
+        Toast(error);
+        return Promise.reject(error);
       });
   }
 

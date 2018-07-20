@@ -65,7 +65,9 @@
         let router = this.$router;
         TGCoinHttpUtils.post("/user/api/login", {userName: this.username, password: this.password})
           .then(function (res) {
-            localStorage.setItem('sessionKey', res.data);
+            console.log(res);
+            localStorage.setItem('uid', res.uid);
+            localStorage.setItem('token', res.token);
             router.push('/Home');
           });
       }

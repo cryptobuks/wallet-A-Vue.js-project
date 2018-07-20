@@ -75,7 +75,8 @@
       VueQArt
     }, methods: {
       logout() {
-        localStorage.removeItem('sessionKey');
+        localStorage.removeItem('uid');
+        localStorage.removeItem('token');
         this.$router.push('/Login');
       }
     }
