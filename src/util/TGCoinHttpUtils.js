@@ -3,6 +3,7 @@ import {Toast} from 'mint-ui'
 import Qs from 'qs'
 import Vue from 'vue'
 import router from '../router/index'
+
 let vue = new Vue({router});
 
 let TGCoinHttpUtils = {
@@ -17,7 +18,7 @@ let TGCoinHttpUtils = {
       // 请求方法同上
       method: 'post', // default
       // 基础url前缀
-      baseURL: 'http://127.0.0.1:9022',
+      baseURL: 'http://192.168.8.125:9022',
       // transformRequest: [function (data) {
       //   // 这里可以在发送请求之前对请求数据做处理，比如form-data格式化等，这里可以使用开头引入的Qs（这个模块在安装axios的时候就已经安装了，不需要另外安装）
       //   request = Qs.stringify({});
@@ -51,12 +52,18 @@ let TGCoinHttpUtils = {
 
     return axios.post(url, request, config).then(function (res) {
 
-      if (res.status === 401) {
-        vue.$router.push("/Login");
-        Toast("请重新登录");
-        localStorage.removeItem("token");
-        localStorage.removeItem("uid");
-        return Promise.reject("请重新登录");
+      switch (res.status) {
+        case 401:
+          vue.$router.push("/Login");
+          Toast("请重新登录");
+          localStorage.removeItem("token");
+          localStorage.removeItem("uid");
+          return Promise.reject("请重新登录");
+        case 500:
+          Toast("系统繁忙");
+          return Promise.reject("系统繁忙");
+        default:
+          break;
       }
 
       if (res.data.code !== 100) {

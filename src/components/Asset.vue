@@ -1,10 +1,12 @@
 <template>
   <div class="page-part">
     <mt-cell class="cell"
-             title="TG-COIN"
+             v-for="wallet in walletList"
+             :title="wallet.tokenName"
+             :value="wallet.balance"
              to=""
              is-link
-             v-model="balance">
+    >
       <img slot="icon" src="../assets/logo.png" width="24" height="24">
     </mt-cell>
   </div>
@@ -16,15 +18,14 @@
     name: 'asset',
     data() {
       return {
-        balance: 0,
+        walletList: [],
       };
     }, created: function () {
       const _this = this;
-      TGCoinHttpUtils.post("/wallet/api/getBalance", {address: "0x10458298a51e19f676cb42302c63382b7ad594c1"})
+      TGCoinHttpUtils.post("/wallet/api/walletList", {})
         .then(function (res) {
-          console.log(res.data);
-          _this.balance = res.data;
-        })
+          _this.walletList = res
+        });
     }
   }
 </script>

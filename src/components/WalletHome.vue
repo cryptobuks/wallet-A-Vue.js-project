@@ -2,22 +2,20 @@
   <div class="page-tabbar">
 
     <div class="page-wrap">
-      <mt-header fixed :title="title" :class="header">
-
-      </mt-header>
+      <mt-header fixed title="感恩钱包" class="header"></mt-header>
       <!-- tabcontainer -->
-      <div :class="body">
+      <div class="body">
         <mt-tab-container class="page-tabbar-container" v-model="selected">
-          <mt-tab-container-item id="asset">
+          <mt-tab-container-item id="资产">
             <asset></asset>
           </mt-tab-container-item>
-          <mt-tab-container-item id="receive">
+          <mt-tab-container-item id="转入">
 
           </mt-tab-container-item>
-          <mt-tab-container-item id="send">
+          <mt-tab-container-item id="转出">
 
           </mt-tab-container-item>
-          <mt-tab-container-item id="my">
+          <mt-tab-container-item id="我的">
             <div class="page-part">
               <mt-cell
                 title="实名认证"
@@ -28,7 +26,7 @@
               </mt-cell>
             </div>
             <div class="sing-out">
-              <mt-button type="danger" @click="logout()" class="button">退出</mt-button>
+                <mt-button type="danger" @click="logout()" class="button">退出</mt-button>
             </div>
           </mt-tab-container-item>
         </mt-tab-container>
@@ -36,19 +34,19 @@
     </div>
 
     <mt-tabbar v-model="selected" fixed>
-      <mt-tab-item id="asset">
+      <mt-tab-item id="资产">
         <img slot="icon" src="../assets/logo.png">
         资产
       </mt-tab-item>
-      <mt-tab-item id="receive">
+      <mt-tab-item id="转入">
         <img slot="icon" src="../assets/logo.png">
         转入
       </mt-tab-item>
-      <mt-tab-item id="send">
+      <mt-tab-item id="转出">
         <img slot="icon" src="../assets/logo.png">
         转出
       </mt-tab-item>
-      <mt-tab-item id="my">
+      <mt-tab-item id="我的">
         <img slot="icon" src="../assets/logo.png">
         我的
       </mt-tab-item>
@@ -63,17 +61,14 @@
     name: 'home',
     data() {
       return {
-        selected: 'asset',
+        selected: '资产',
         config: {
           value: 'http://127.0.0.1:9022',
           imagePath: '../assets/logo.png',
           color: 'red',
           filter: 'color',
           size: '500px'
-        },
-        header: 'header-asset',
-        title: '',
-        body: 'body-asset',
+        }
       };
     }, components: {
       asset,
@@ -84,31 +79,13 @@
         localStorage.removeItem('token');
         this.$router.push('/Login');
       }
-    }, watch: {
-      selected: function (val, oldVal) {
-        if (val === 'asset') {
-          this.header = 'header-' + val;
-          this.title = '';
-          this.body = 'body-' + val;
-        } else {
-          this.header = '';
-          this.title = '感恩钱包';
-          this.body = 'body';
-        }
-      }
     }
   }
 </script>
 
 <style>
-  .header-asset {
-    height: 30%;
-  }
-
-  .body-asset {
-    overflow: auto;
-    display: block;
-    margin-top: 40%;
+  .header {
+    height: 6%;
   }
 
   .body {
@@ -138,8 +115,7 @@
   .sing-out {
     padding-top: 93%;
   }
-
-  .button {
+  .button{
     width: 250px;
   }
 </style>

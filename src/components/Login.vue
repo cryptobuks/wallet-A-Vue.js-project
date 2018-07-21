@@ -33,10 +33,6 @@
   a {
     text-decoration: none;
   }
-
-  .mint-cell:last-child {
-    background-image: none;
-  }
 </style>
 <script>
   import {Toast} from 'mint-ui';
