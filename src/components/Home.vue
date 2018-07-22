@@ -1,5 +1,6 @@
 <template>
   <div class="page-tabbar">
+    <mt-header fixed title="感恩钱包"></mt-header>
     <div class="page-wrap">
       <div class="body">
         <mt-tab-container class="page-tabbar-container" v-model="selected">
@@ -69,14 +70,8 @@
 </script>
 
 <style>
-
   .cell {
     min-height: 78px;
-  }
-
-  .page-tabbar {
-    overflow: hidden;
-    height: 100vh;
   }
 
   .page-wrap {
@@ -84,13 +79,8 @@
     height: 100%;
     /*padding-bottom: 100px;*/
   }
-
   .page-part {
     text-align: left;
-  }
-
-  .sing-out {
-    padding-top: 93%;
   }
 
   .button {

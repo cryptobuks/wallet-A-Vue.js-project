@@ -1,15 +1,19 @@
 <template>
   <div class="page-part">
-    <mt-header fixed title="fixed top"></mt-header>
-    <mt-cell class="cell"
-             v-for="wallet in walletList"
-             :title="wallet.tokenName"
-             :value="wallet.balance"
-             to=""
-             is-link
-    >
-      <img slot="icon" src="../assets/logo.png" width="24" height="24">
-    </mt-cell>
+    <div class="asset-header" :style="screenWidth"></div>
+    <div class="asset-add"><img src="../assets/plus32.png" width="35" height="35"/></div>
+    <div class="asset-address"></div>
+    <div>
+      <mt-cell class="cell"
+               v-for="wallet in walletList"
+               :title="wallet.tokenName"
+               :value="wallet.balance"
+               to=""
+               is-link
+      >
+        <img slot="icon" src="../assets/logo.png" width="24" height="24">
+      </mt-cell>
+    </div>
   </div>
 </template>
 <script>
@@ -20,6 +24,7 @@
     data() {
       return {
         walletList: [],
+        screenWidth: "width:" + document.body.clientWidth + "px;" + "height:" + document.body.clientHeight / 3 + "px"
       };
     }, created: function () {
       const _this = this;
@@ -27,8 +32,19 @@
         .then(function (res) {
           _this.walletList = res
         });
-    },components:{
-
-    }
+    }, components: {}
   }
 </script>
+<style>
+  .asset-header {
+    background-color: lightgrey;
+    height: 30%;
+    min-height: 250px;
+  }
+
+  .asset-add {
+    margin-top: -12%;
+    float: right;
+    margin-right: 5%;
+  }
+</style>
