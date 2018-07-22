@@ -1,12 +1,7 @@
 <template>
   <div class="page-tabbar">
-
     <div class="page-wrap">
-      <mt-header fixed :title="title" :class="header">
-
-      </mt-header>
-      <!-- tabcontainer -->
-      <div :class="body">
+      <div class="body">
         <mt-tab-container class="page-tabbar-container" v-model="selected">
           <mt-tab-container-item id="asset">
             <asset></asset>
@@ -15,22 +10,12 @@
 
           </mt-tab-container-item>
           <mt-tab-container-item id="send">
+          </mt-tab-container-item>
 
-          </mt-tab-container-item>
           <mt-tab-container-item id="my">
-            <div class="page-part">
-              <mt-cell
-                title="实名认证"
-                to=""
-                is-link
-                value="未认证">
-                <img slot="icon" src="../assets/logo.png" width="24" height="24">
-              </mt-cell>
-            </div>
-            <div class="sing-out">
-              <mt-button type="danger" @click="logout()" class="button">退出</mt-button>
-            </div>
+            <myself_config></myself_config>
           </mt-tab-container-item>
+
         </mt-tab-container>
       </div>
     </div>
@@ -57,7 +42,7 @@
 </template>
 <script>
   import asset from '../components/Asset'
-  import VueQArt from 'vue-qart'
+  import myself_config from '../components/Myself_Config'
 
   export default {
     name: 'home',
@@ -71,50 +56,19 @@
           filter: 'color',
           size: '500px'
         },
-        header: 'header-asset',
-        title: '',
-        body: 'body-asset',
       };
     }, components: {
       asset,
-      VueQArt
+      myself_config,
     }, methods: {
-      logout() {
-        localStorage.removeItem('uid');
-        localStorage.removeItem('token');
-        this.$router.push('/Login');
-      }
+
     }, watch: {
-      selected: function (val, oldVal) {
-        if (val === 'asset') {
-          this.header = 'header-' + val;
-          this.title = '';
-          this.body = 'body-' + val;
-        } else {
-          this.header = '';
-          this.title = '感恩钱包';
-          this.body = 'body';
-        }
-      }
+
     }
   }
 </script>
 
 <style>
-  .header-asset {
-    height: 30%;
-  }
-
-  .body-asset {
-    overflow: auto;
-    display: block;
-    margin-top: 40%;
-  }
-
-  .body {
-    overflow: auto;
-    display: block;
-  }
 
   .cell {
     min-height: 78px;

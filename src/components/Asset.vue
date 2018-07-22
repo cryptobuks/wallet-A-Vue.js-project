@@ -1,5 +1,6 @@
 <template>
   <div class="page-part">
+    <mt-header fixed title="fixed top"></mt-header>
     <mt-cell class="cell"
              v-for="wallet in walletList"
              :title="wallet.tokenName"
@@ -26,6 +27,8 @@
         .then(function (res) {
           _this.walletList = res
         });
+    },components:{
+
     }
   }
 </script>
