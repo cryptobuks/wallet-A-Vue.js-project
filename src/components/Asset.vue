@@ -1,7 +1,11 @@
 <template>
   <div class="page-part">
     <div class="asset-header" :style="screenWidth">
-      <div class="asset-address">钱包地址：{{address}}</div>
+      <div class="asset-address">
+        <H1>{{wallet.walletName}}</H1>
+        <p></p>
+        钱包地址：{{address}}
+      </div>
       <div class="asset-add">
         <div @click="addWallet">
           <img slot="icon" src="../assets/plus32.png" width="35" height="35"/>
@@ -30,6 +34,7 @@
       return {
         wallet: {
           tokenName: "",
+          walletName: "",
           balance: "",
           address: "",
         },
@@ -57,9 +62,10 @@
 </script>
 <style>
   .asset-header {
-    background-color: lightgrey;
+    background-color: #fafafa;
     height: 30%;
     min-height: 250px;
+    background-image: url("../assets/20180722155657.png");
   }
 
   .asset-add {
@@ -69,7 +75,7 @@
   }
 
   .asset-address {
-    padding-top: 30%;
+    padding-top: 12%;
     margin-left: 20%;
   }
 </style>
