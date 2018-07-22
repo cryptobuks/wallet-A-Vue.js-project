@@ -1,11 +1,12 @@
 <template>
   <div class="page-part">
-    <div class="asset-header" :style="screenWidth"></div>
-    <div class="asset-add"><img src="../assets/plus32.png" width="35" height="35"/></div>
-    <div class="asset-address"></div>
+    <div class="asset-header" :style="screenWidth">
+      <div class="asset-address">钱包地址：{{address}}</div>
+      <div class="asset-add"><img src="../assets/plus32.png" width="35" height="35"/></div>
+    </div>
+
     <div>
       <mt-cell class="cell"
-               v-for="wallet in walletList"
                :title="wallet.tokenName"
                :value="wallet.balance"
                to=""
@@ -23,16 +24,25 @@
     name: 'asset',
     data() {
       return {
-        walletList: [],
+        wallet: {
+          tokenName: "",
+          balance: "",
+          address: "",
+        },
         screenWidth: "width:" + document.body.clientWidth + "px;" + "height:" + document.body.clientHeight / 3 + "px"
       };
     }, created: function () {
       const _this = this;
       TGCoinHttpUtils.post("/wallet/api/walletList", {})
         .then(function (res) {
-          _this.walletList = res
+          _this.wallet = res[0]
         });
-    }, components: {}
+    }, components: {},
+    computed: {
+      address() {
+        return this.wallet.address.substring(0, 10) + "****";
+      }
+    }
   }
 </script>
 <style>
@@ -43,8 +53,12 @@
   }
 
   .asset-add {
-    margin-top: -12%;
+    margin-top: 15%;
     float: right;
     margin-right: 5%;
+  }
+  .asset-address {
+    padding-top:30%;
+    margin-left: 20%;
   }
 </style>
