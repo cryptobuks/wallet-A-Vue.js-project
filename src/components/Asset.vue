@@ -1,6 +1,6 @@
 <template>
   <div class="page-part">
-    <div class="asset-header" :style="screenWidth">
+    <div class="asset-header" :style="screen">
       <div class="asset-address">
         <H1>{{wallet.walletName}}</H1>
         <p></p>
@@ -37,7 +37,7 @@
           balance: "",
           address: "",
         },
-        screenWidth: "width:" + document.body.clientWidth + "px;" + "height:" + document.body.clientHeight / 3 + "px"
+        screen: "width:" + document.body.clientWidth + "px;" + "height:" + document.body.clientHeight / 3 + "px"
       };
     }, created: function () {
 

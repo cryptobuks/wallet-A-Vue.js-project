@@ -5,8 +5,6 @@ import Vue from 'vue'
 import router from '../router/index'
 import {Indicator} from 'mint-ui';
 
-let vue = new Vue({router});
-
 let TGCoinHttpUtils = {
   post: function (url, request) {
     // axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -51,6 +49,7 @@ let TGCoinHttpUtils = {
       },
     };
     Indicator.open('加载中...');
+    let vue = new Vue({router});
 
     return axios.post(url, request, config).then(function (res) {
 

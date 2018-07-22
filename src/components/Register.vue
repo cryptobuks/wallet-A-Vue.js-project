@@ -53,12 +53,11 @@
     }, methods: {
       register() {
         let inputMap = this.input;
-        console.log(this.state);
         let router = this.$router;
         let isSuccess = true;
         Object.keys(inputMap).forEach(function (key) {
           if (!RegexRoules[key].test(inputMap[key])) {
-            Toast(RegexRoules['desc'][key] + '信息格式有误，请核对后再提交');
+            Toast(RegexRoules['desc'][key] + '格式有误，请核对后再提交');
             isSuccess = false;
             throw new Error('格式有误')
           }
