@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
+import AddWallet from '@/components/AddWallet'
 import {Tabbar, TabItem} from 'mint-ui';
 import {TabContainer, TabContainerItem} from 'mint-ui';
 import {Button} from 'mint-ui';
@@ -46,6 +47,14 @@ const router = new Router({
       component: Register,
       meta: {
         unNeedAuth: true
+      }
+    },
+    {
+      path: '/AddWallet',
+      name: 'AddWallet',
+      component: AddWallet,
+      meta: {
+        unNeedAuth: false
       }
     },
   ]

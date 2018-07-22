@@ -2,7 +2,11 @@
   <div class="page-part">
     <div class="asset-header" :style="screenWidth">
       <div class="asset-address">钱包地址：{{address}}</div>
-      <div class="asset-add"><img src="../assets/plus32.png" width="35" height="35"/></div>
+      <div class="asset-add">
+        <div @click="addWallet">
+          <img slot="icon" src="../assets/plus32.png" width="35" height="35"/>
+        </div>
+      </div>
     </div>
 
     <div>
@@ -37,10 +41,16 @@
         .then(function (res) {
           _this.wallet = res[0]
         });
-    }, components: {},
+    },
+    components: {},
     computed: {
       address() {
         return this.wallet.address.substring(0, 10) + "****";
+      }
+    },
+    methods: {
+      addWallet() {
+        this.$router.push("/AddWallet");
       }
     }
   }
@@ -57,8 +67,9 @@
     float: right;
     margin-right: 5%;
   }
+
   .asset-address {
-    padding-top:30%;
+    padding-top: 30%;
     margin-left: 20%;
   }
 </style>

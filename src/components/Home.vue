@@ -43,7 +43,7 @@
 </template>
 <script>
   import asset from '../components/Asset'
-  import myself_config from '../components/Myself_Config'
+  import myself_config from '../components/MyselfConfig'
 
   export default {
     name: 'home',

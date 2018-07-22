@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {Toast} from 'mint-ui'
-import Qs from 'qs'
+// import Qs from 'qs'
 import Vue from 'vue'
 import router from '../router/index'
 
