@@ -11,6 +11,7 @@ import {Cell} from 'mint-ui';
 import {Header} from 'mint-ui';
 import {Field} from 'mint-ui';
 
+
 Vue.use(Router);
 
 Vue.component(Field.name, Field);

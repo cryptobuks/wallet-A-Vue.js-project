@@ -4,15 +4,14 @@
       <div class="asset-address">
         <H1>{{wallet.walletName}}</H1>
         <p></p>
-        钱包地址：{{address}}
-      </div>
-      <div class="asset-add">
-        <div @click="addWallet">
-          <img slot="icon" src="../assets/plus32.png" width="35" height="35"/>
-        </div>
+        {{address}}
       </div>
     </div>
-
+    <div class="asset-add">
+      <div @click="addWallet">
+        <img slot="icon" src="../assets/plus32.png" width="35" height="35"/>
+      </div>
+    </div>
     <div>
       <mt-cell class="cell"
                :title="wallet.tokenName"
@@ -41,16 +40,17 @@
         screenWidth: "width:" + document.body.clientWidth + "px;" + "height:" + document.body.clientHeight / 3 + "px"
       };
     }, created: function () {
+
       const _this = this;
       TGCoinHttpUtils.post("/wallet/api/walletList", {})
         .then(function (res) {
-          _this.wallet = res[0]
+          _this.wallet = res[0];
         });
     },
     components: {},
     computed: {
       address() {
-        return this.wallet.address.substring(0, 10) + "****";
+        return "钱包地址：" + this.wallet.address.substring(0, 10) + "****";
       }
     },
     methods: {
@@ -69,7 +69,7 @@
   }
 
   .asset-add {
-    margin-top: 15%;
+    margin-top: -13%;
     float: right;
     margin-right: 5%;
   }

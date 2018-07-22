@@ -3,6 +3,7 @@ import {Toast} from 'mint-ui'
 // import Qs from 'qs'
 import Vue from 'vue'
 import router from '../router/index'
+import {Indicator} from 'mint-ui';
 
 let vue = new Vue({router});
 
@@ -49,6 +50,7 @@ let TGCoinHttpUtils = {
         return status >= 200 && status < 550; // default
       },
     };
+    Indicator.open('加载中...');
 
     return axios.post(url, request, config).then(function (res) {
 
@@ -77,7 +79,11 @@ let TGCoinHttpUtils = {
         console.log(error);
         Toast(error);
         return Promise.reject(error);
-      });
+      }).finally(
+        function () {
+          Indicator.close();
+        }
+      );
   }
 
 };
