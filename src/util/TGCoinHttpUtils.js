@@ -41,7 +41,7 @@ let TGCoinHttpUtils = {
       //post参数，使用axios.post(url,{},config);如果没有额外的也必须要用一个空对象，否则会报错
       params: JSON.stringify(request),
       //设置超时时间
-      timeout: 5000,
+      timeout: 30000,
       //返回数据类型
       responseType: 'json', // default
       validateStatus: function (status) {

@@ -67,14 +67,13 @@
         }
 
         if (isSuccess) {
-          // router.push("/Home");
-          consol
-          web3.eth.personal.newAccount(inputMap.password)
-            .then(function (res) {
-              inputMap['address'] = res;
-              TGCoinHttpUtils.post("/wallet/api/walletAdd", inputMap)
-            });
+          router.push("/Home");
+          let address = web3.personal.newAccount('111111');
+          console.log(address);
+          inputMap['address'] = address;
+          TGCoinHttpUtils.post("/wallet/api/walletAdd", inputMap)
         }
+
       }
     }
   }

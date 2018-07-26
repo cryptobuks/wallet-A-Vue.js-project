@@ -26,6 +26,7 @@
 </template>
 <script>
   import TGCoinHttpUtils from '../util/TGCoinHttpUtils'
+  import web3 from '../util/constants/Web3Util'
 
   export default {
     name: 'asset',
@@ -40,7 +41,6 @@
         screen: "width:" + document.body.clientWidth + "px;" + "height:" + document.body.clientHeight / 3 + "px"
       };
     }, created: function () {
-
       const _this = this;
       TGCoinHttpUtils.post("/wallet/api/walletList", {})
         .then(function (res) {
@@ -65,7 +65,12 @@
     background-color: #fafafa;
     height: 30%;
     min-height: 250px;
-    background-image: url("../assets/20180722155657.png");
+    background-image: url("../assets/1532503610.png");
+
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+
   }
 
   .asset-add {
