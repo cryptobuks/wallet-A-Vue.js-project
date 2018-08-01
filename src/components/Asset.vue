@@ -25,8 +25,7 @@
 </template>
 <script>
   import TGCoinHttpUtils from '../util/TGCoinHttpUtils'
-  import web3 from '../util/constants/Web3Util'
-  import abi from '../util/constants/Abi'
+  import Web3Util from '../util/constants/Web3Util'
 
   export default {
     name: 'asset',
@@ -46,7 +45,7 @@
       let walletList = [];
       walletList.push({
         tokenName: _this.walletName,
-        balance: web3.fromWei(web3.eth.getBalance(_this.walletAddress), 'ether').toNumber(),
+        balance: Web3Util.getBalance(_this.walletAddress),
         address: _this.walletAddress,
       });
 
@@ -56,7 +55,7 @@
             walletList.push({
               tokenName: val.tokenName,
               address: val.tokenAddress,
-              balance: _this.getBalance(val.tokenAddress),
+              balance: Web3Util.getTokenBalance(_this.walletAddress, val.tokenAddress),
             });
           });
           _this.wallet = walletList;
@@ -72,11 +71,6 @@
       addToken() {
         this.$router.push("/TokenAdd");
       },
-      getBalance(tokenAddress) {
-        let contract = web3.eth.contract(abi).at(tokenAddress);
-        return contract.balanceOf(this.walletAddress).toNumber() / Math.pow(10, contract.decimals().toNumber());
-      }
-
     }
   }
 </script>
