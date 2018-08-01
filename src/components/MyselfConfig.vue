@@ -1,6 +1,13 @@
 <template>
   <div class="page-part">
     <mt-cell
+      title="钱包管理"
+      to="/walletConfig"
+      is-link
+      value="">
+      <img slot="icon" src="../assets/logo.png" width="24" height="24">
+    </mt-cell>
+    <mt-cell
       title="实名认证"
       to=""
       is-link

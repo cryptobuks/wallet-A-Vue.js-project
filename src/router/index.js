@@ -4,12 +4,17 @@ import Home from '@/components/Home'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import AddWallet from '@/components/AddWallet'
+import WalletConfig from '@/components/WalletConfig'
+import TokenAdd from '@/components/TokenAdd'
 import {Tabbar, TabItem} from 'mint-ui';
 import {TabContainer, TabContainerItem} from 'mint-ui';
 import {Button} from 'mint-ui';
 import {Cell} from 'mint-ui';
 import {Header} from 'mint-ui';
 import {Field} from 'mint-ui';
+import { Checklist } from 'mint-ui';
+import { Radio } from 'mint-ui';
+
 
 Vue.use(Router);
 
@@ -21,6 +26,8 @@ Vue.component(TabContainer.name, TabContainer);
 Vue.component(TabContainerItem.name, TabContainerItem);
 Vue.component(Button.name, Button);
 Vue.component(Cell.name, Cell);
+Vue.component(Checklist.name, Checklist);
+Vue.component(Radio.name, Radio);
 
 const router = new Router({
   routes: [
@@ -53,9 +60,16 @@ const router = new Router({
       path: '/AddWallet',
       name: 'AddWallet',
       component: AddWallet,
-      meta: {
-        unNeedAuth: false
-      }
+    },
+    {
+      path: '/TokenAdd',
+      name: 'TokenAdd',
+      component: TokenAdd,
+    },
+    {
+      path: '/WalletConfig',
+      name: 'WalletConfig',
+      component: WalletConfig,
     },
   ]
 });

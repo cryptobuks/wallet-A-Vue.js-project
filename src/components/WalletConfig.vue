@@ -1,25 +1,13 @@
 <template>
   <div class="page-part">
-    <div class="asset-header" :style="screen">
-      <div class="asset-address">
-        <H1>{{wallet.walletName}}</H1>
-        <p></p>
-        {{address}}
-      </div>
-    </div>
-    <div class="asset-add" @click="addToken">
-        <img slot="icon" src="../assets/plus32.png" width="35" height="35"/>
-    </div>
-    <div>
-      <mt-cell class="cell"
-               :title="wallet.tokenName"
-               :value="wallet.balance"
-               to=""
-               is-link
-      >
-        <img slot="icon" src="../assets/logo.png" width="24" height="24">
-      </mt-cell>
-    </div>
+    <mt-header fixed title="感恩钱包"></mt-header>
+    <mt-radio
+      :max="1"
+      align="right"
+      title="钱包切换"
+      v-model="wallet"
+      :options="addressOptions ">
+    </mt-radio>
   </div>
 </template>
 <script>
@@ -30,30 +18,29 @@
     name: 'asset',
     data() {
       return {
-        wallet: {
-          tokenName: "",
-          walletName: "",
-          balance: "",
-          address: "",
-        },
+        wallet: "",
+        addressOptions: [],
         screen: "width:" + document.body.clientWidth + "px;" + "height:" + document.body.clientHeight / 3 + "px"
       };
     }, created: function () {
       const _this = this;
       TGCoinHttpUtils.post("/wallet/api/walletList", {})
         .then(function (res) {
-          _this.wallet = res[0];
+          res.forEach(function (row) {
+            let obj = {
+              label: row.tokenName,
+              value: row.address,
+            };
+            _this.addressOptions.push(obj);
+          })
         });
     },
     components: {},
-    computed: {
-      address() {
-        return "钱包地址：" + this.wallet.address.substring(0, 10) + "****";
-      }
-    },
-    methods: {
-      addToken() {
-        this.$router.push("/TokenAdd");
+    computed: {},
+    methods: {},
+    watch:{
+      wallet(){
+        console.log(this.wallet)
       }
     }
   }
