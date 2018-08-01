@@ -2,19 +2,20 @@
   <div class="page-part">
     <div class="asset-header" :style="screen">
       <div class="asset-address">
-        <H1>{{wallet.walletName}}</H1>
+        <H1>{{walletName}}</H1>
         <p></p>
         {{address}}
       </div>
     </div>
     <div class="asset-add" @click="addToken">
-        <img slot="icon" src="../assets/plus32.png" width="35" height="35"/>
+      <img slot="icon" src="../assets/plus32.png" width="35" height="35"/>
     </div>
     <div>
       <mt-cell class="cell"
-               :title="wallet.tokenName"
-               :value="wallet.balance"
+               :title="item.tokenName"
+               :value="item.balance"
                to=""
+               v-for="item in wallet"
                is-link
       >
         <img slot="icon" src="../assets/logo.png" width="24" height="24">
@@ -25,36 +26,57 @@
 <script>
   import TGCoinHttpUtils from '../util/TGCoinHttpUtils'
   import web3 from '../util/constants/Web3Util'
+  import abi from '../util/constants/Abi'
 
   export default {
     name: 'asset',
     data() {
       return {
-        wallet: {
+        walletAddress: localStorage.getItem('walletAddress'),
+        walletName: localStorage.getItem('walletName'),
+        wallet: [{
           tokenName: "",
-          walletName: "",
           balance: "",
           address: "",
-        },
+        }],
         screen: "width:" + document.body.clientWidth + "px;" + "height:" + document.body.clientHeight / 3 + "px"
       };
     }, created: function () {
       const _this = this;
+      let walletList = [];
+      walletList.push({
+        tokenName: _this.walletName,
+        balance: web3.fromWei(web3.eth.getBalance(_this.walletAddress), 'ether').toNumber(),
+        address: _this.walletAddress,
+      });
+
       TGCoinHttpUtils.post("/wallet/api/walletList", {})
         .then(function (res) {
-          _this.wallet = res[0];
+          res.forEach(function (val) {
+            walletList.push({
+              tokenName: val.tokenName,
+              address: val.tokenAddress,
+              balance: _this.getBalance(val.tokenAddress),
+            });
+          });
+          _this.wallet = walletList;
         });
     },
     components: {},
     computed: {
       address() {
-        return "钱包地址：" + this.wallet.address.substring(0, 10) + "****";
+        return "钱包地址：" + this.walletAddress.substring(0, 10) + "****";
       }
     },
     methods: {
       addToken() {
         this.$router.push("/TokenAdd");
+      },
+      getBalance(tokenAddress) {
+        let contract = web3.eth.contract(abi).at(tokenAddress);
+        return contract.balanceOf(this.walletAddress).toNumber() / Math.pow(10, contract.decimals().toNumber());
       }
+
     }
   }
 </script>

@@ -64,6 +64,8 @@
             console.log(res);
             localStorage.setItem('uid', res.uid);
             localStorage.setItem('token', res.token);
+            localStorage.setItem('walletAddress', res.walletAddress);
+            localStorage.setItem('walletName', res.walletName);
             router.push('/Home');
           });
       }
