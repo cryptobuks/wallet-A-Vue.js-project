@@ -6,8 +6,7 @@
       </div>
     </mt-header>
 
-    <mt-field label="收款地址" v-model="receiveAddress"><input id="scan" type='button' disabled="disabled"
-                                                           @click='scanImg' value='扫描图片'/></mt-field>
+    <mt-field label="收款地址" v-model="receiveAddress"></mt-field>
 
     <mt-field label="余额" v-model="tokenBalance" disableClear readonly>{{symbol}}</mt-field>
 
@@ -47,17 +46,6 @@
         let originAmount = Web3Util.getTokenBalance(localStorage.getItem('walletAddress'), this.$route.query.tokenAddress);
         this.tokenBalance = originAmount - this.sendAmount;
       },
-      scanImg() {
-        plus.barcode.scan( '../../assets/logo.png', function (type,result) {
-          alert( "Scan success:("+type+")"+result );
-        }, function (error) {
-          alert( error.message );
-        } );
-      },
-      onPlusReady() {
-        var e = document.getElementById("scan");
-        e.removeAttribute( "disabled" );
-      }
     }, computed: {
       gasValue: {
         get: function () {
@@ -67,12 +55,7 @@
         }
       }
     }
-
   }
-
-  // 扩展API加载完毕后调用onPlusReady回调函数
-  document.addEventListener( "plusready", this.onPlusReady, false );
-
 </script>
 <style>
 
