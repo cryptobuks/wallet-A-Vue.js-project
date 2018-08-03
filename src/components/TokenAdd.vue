@@ -10,7 +10,7 @@
   </div>
 </template>
 <script>
-  import web3 from '../util/constants/Web3Util'
+  import web3 from '../util/Web3Util'
 
   export default {}
 

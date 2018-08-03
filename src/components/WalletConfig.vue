@@ -12,7 +12,7 @@
 </template>
 <script>
   import TGCoinHttpUtils from '../util/TGCoinHttpUtils'
-  import web3 from '../util/constants/Web3Util'
+  import web3 from '../util/Web3Util'
 
   export default {
     name: 'asset',

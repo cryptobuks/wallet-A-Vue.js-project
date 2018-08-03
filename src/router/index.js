@@ -3,22 +3,34 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
-import AddWallet from '@/components/AddWallet'
+import WalletAdd from '@/components/WalletAdd'
 import WalletConfig from '@/components/WalletConfig'
 import TokenAdd from '@/components/TokenAdd'
+import TokenInfo from '@/components/TokenInfo'
+import Receive from '@/components/Receive'
+import Send from '@/components/Send'
+
+import { Popup } from 'mint-ui';
+import { Actionsheet } from 'mint-ui';
 import {Tabbar, TabItem} from 'mint-ui';
 import {TabContainer, TabContainerItem} from 'mint-ui';
 import {Button} from 'mint-ui';
 import {Cell} from 'mint-ui';
 import {Header} from 'mint-ui';
 import {Field} from 'mint-ui';
-import { Checklist } from 'mint-ui';
-import { Radio } from 'mint-ui';
+import {Checklist} from 'mint-ui';
+import {Radio} from 'mint-ui';
+import {Range} from 'mint-ui';
 
+import VueClipboard from 'vue-clipboard2'
 
 Vue.use(Router);
+Vue.use(VueClipboard);
 
+Vue.component(Range.name, Range);
 Vue.component(Field.name, Field);
+Vue.component(Popup.name, Popup);
+Vue.component(Actionsheet.name, Actionsheet);
 Vue.component(Header.name, Header);
 Vue.component(Tabbar.name, Tabbar);
 Vue.component(TabItem.name, TabItem);
@@ -57,14 +69,29 @@ const router = new Router({
       }
     },
     {
-      path: '/AddWallet',
-      name: 'AddWallet',
-      component: AddWallet,
+      path: '/WalletAdd',
+      name: 'WalletAdd',
+      component: WalletAdd,
     },
     {
       path: '/TokenAdd',
       name: 'TokenAdd',
       component: TokenAdd,
+    },
+    {
+      path: '/TokenInfo',
+      name: 'TokenInfo',
+      component: TokenInfo,
+    },
+    {
+      path: '/Receive',
+      name: 'Receive',
+      component: Receive,
+    },
+    {
+      path: '/Send',
+      name: 'Send',
+      component: Send,
     },
     {
       path: '/WalletConfig',

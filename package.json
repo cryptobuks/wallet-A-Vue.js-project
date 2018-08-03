@@ -12,8 +12,10 @@
   "dependencies": {
     "axios": "^0.18.0",
     "mint-ui": "^2.2.13",
-    "qrcode": "^1.2.0",
+    "qrcode": "^1.2.2",
+    "qrcode.vue": "^1.6.0",
     "vue": "^2.5.2",
+    "vue-clipboard2": "^0.2.1",
     "vue-qart": "^2.1.1",
     "web3": "^0.20.0"
   },

@@ -11,21 +11,22 @@
       <img slot="icon" src="../assets/plus32.png" width="35" height="35"/>
     </div>
     <div>
-      <mt-cell class="cell"
-               :title="item.tokenName"
-               :value="item.balance"
-               to=""
-               v-for="item in wallet"
-               is-link
-      >
-        <img slot="icon" src="../assets/logo.png" width="24" height="24">
-      </mt-cell>
+      <div v-for="item in wallet" @click="goToTokenInfo(item.address)">
+        <mt-cell class="cell"
+                 :title="item.tokenName"
+                 :value="item.balance"
+                 is-link
+        >
+          <img slot="icon" src="../assets/logo.png" width="24" height="24">
+        </mt-cell>
+      </div>
+
     </div>
   </div>
 </template>
 <script>
   import TGCoinHttpUtils from '../util/TGCoinHttpUtils'
-  import Web3Util from '../util/constants/Web3Util'
+  import Web3Util from '../util/Web3Util'
 
   export default {
     name: 'asset',
@@ -71,6 +72,9 @@
       addToken() {
         this.$router.push("/TokenAdd");
       },
+      goToTokenInfo(address) {
+        this.$router.push({path: "/TokenInfo", query: {tokenAddress: address}});
+      }
     }
   }
 </script>

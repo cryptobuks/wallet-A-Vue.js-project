@@ -7,12 +7,9 @@
           <mt-tab-container-item id="asset">
             <asset></asset>
           </mt-tab-container-item>
-          <mt-tab-container-item id="receive">
+          <mt-tab-container-item id="hot">
 
           </mt-tab-container-item>
-          <mt-tab-container-item id="send">
-          </mt-tab-container-item>
-
           <mt-tab-container-item id="my">
             <myself_config></myself_config>
           </mt-tab-container-item>
@@ -26,13 +23,9 @@
         <img slot="icon" src="../assets/logo.png">
         资产
       </mt-tab-item>
-      <mt-tab-item id="receive">
+      <mt-tab-item id="hot">
         <img slot="icon" src="../assets/logo.png">
-        转入
-      </mt-tab-item>
-      <mt-tab-item id="send">
-        <img slot="icon" src="../assets/logo.png">
-        转出
+        热点
       </mt-tab-item>
       <mt-tab-item id="my">
         <img slot="icon" src="../assets/logo.png">
@@ -61,11 +54,7 @@
     }, components: {
       asset,
       myself_config,
-    }, methods: {
-
-    }, watch: {
-
-    }
+    }, methods: {}, watch: {}
   }
 </script>
 
@@ -79,6 +68,7 @@
     height: 100%;
     /*padding-bottom: 100px;*/
   }
+
   .page-part {
     text-align: left;
   }

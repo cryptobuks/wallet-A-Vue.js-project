@@ -28,7 +28,7 @@
 <script>
   import {Toast} from 'mint-ui'
   import RegexRoules from '../util/constants/RegexRoules'
-  import web3 from '../util/constants/Web3Util'
+  import web3 from '../util/Web3Util'
   import TGCoinHttpUtils from '../util/TGCoinHttpUtils'
 
   export default {

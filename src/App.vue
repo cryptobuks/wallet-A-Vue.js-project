@@ -25,4 +25,7 @@
     width: 250px;
   }
 
+  .address-font-size {
+    font-size: 15px;
+  }
 </style>
