@@ -1,18 +1,23 @@
 <template>
   <div class="page-part">
-    <mt-header fixed title="感恩钱包"></mt-header>
+    <mt-header fixed title="感恩钱包">
+      <div @click="goBack()" slot="left">
+        <mt-button icon="back">返回</mt-button>
+      </div>
+    </mt-header>
     <mt-radio
       :max="1"
       align="right"
       title="钱包切换"
       v-model="wallet"
-      :options="addressOptions ">
+      :options="addressOptions">
     </mt-radio>
   </div>
 </template>
 <script>
   import TGCoinHttpUtils from '../util/TGCoinHttpUtils'
   import web3 from '../util/Web3Util'
+  import {MessageBox} from 'mint-ui';
 
   export default {
     name: 'asset',
@@ -20,7 +25,7 @@
       return {
         wallet: "",
         addressOptions: [],
-        screen: "width:" + document.body.clientWidth + "px;" + "height:" + document.body.clientHeight / 3 + "px"
+        screen: "width:" + document.body.clientWidth + "px;" + "height:" + document.body.clientHeight / 3 + "px",
       };
     }, created: function () {
       const _this = this;
@@ -28,8 +33,8 @@
         .then(function (res) {
           res.forEach(function (row) {
             let obj = {
-              label: row.tokenName,
-              value: row.address,
+              label: row.walletName,
+              value: row.walletAddress,
             };
             _this.addressOptions.push(obj);
           })
@@ -37,10 +42,23 @@
     },
     components: {},
     computed: {},
-    methods: {},
-    watch:{
-      wallet(){
-        console.log(this.wallet)
+    methods: {
+      goBack() {
+        this.$router.go(-1)
+      },
+    },
+    watch: {
+      wallet() {
+        let _this = this;
+        MessageBox.confirm('确定要切换钱包吗?').then(action => {
+          localStorage.setItem("walletAddress", _this.wallet);
+          _this.addressOptions.forEach(function (key) {
+            if(key.value ===_this.wallet){
+              localStorage.setItem("walletName", key.label)
+            }
+          });
+        })
+
       }
     }
   }

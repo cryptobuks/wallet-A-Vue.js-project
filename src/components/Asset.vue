@@ -50,7 +50,7 @@
         address: _this.walletAddress,
       });
 
-      TGCoinHttpUtils.post("/wallet/api/walletList", {})
+      TGCoinHttpUtils.post("/walletToken/api/WalletTokenList", {})
         .then(function (res) {
           res.forEach(function (val) {
             walletList.push({

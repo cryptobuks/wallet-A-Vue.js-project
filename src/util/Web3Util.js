@@ -1,6 +1,6 @@
 import abi from './constants/Abi'
 
-let web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+let web3 = new Web3(new Web3.providers.HttpProvider('http://120.79.191.116:1443'));
 
 let Web3Util = {
   instance: web3,
