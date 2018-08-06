@@ -5,6 +5,7 @@
         <H1>{{walletName}}</H1>
         <p></p>
         {{address}}
+        <p>Eth资产：{{walletBalance}}</p>
       </div>
     </div>
     <div class="asset-add" @click="addToken">
@@ -39,16 +40,13 @@
           balance: "",
           address: "",
         }],
+        walletBalance: "",
         screen: "width:" + document.body.clientWidth + "px;" + "height:" + document.body.clientHeight / 3 + "px"
-      };
+      }
+        ;
     }, created: function () {
       const _this = this;
       let walletList = [];
-      walletList.push({
-        tokenName: _this.walletName,
-        balance: Web3Util.getBalance(_this.walletAddress),
-        address: _this.walletAddress,
-      });
 
       TGCoinHttpUtils.post("/walletToken/api/WalletTokenList", {})
         .then(function (res) {
@@ -56,17 +54,30 @@
             walletList.push({
               tokenName: val.tokenName,
               address: val.tokenAddress,
-              balance: Web3Util.getTokenBalance(val.tokenAddress),
+              balance: 0,
             });
           });
-          _this.wallet = walletList;
+        }).then(function () {
+        walletList.forEach(function (obj) {
+          Web3Util.getTokenBalance(obj.address).then(function (res) {
+            obj.balance = res;
+          });
         });
+      }).then(function () {
+        _this.wallet = walletList;
+      });
+
+
+      Web3Util.getBalance().then(function (res) {
+        _this.walletBalance = res;
+      })
+
     },
     components: {},
     computed: {
       address() {
         return "钱包地址：" + this.walletAddress.substring(0, 10) + "****";
-      }
+      },
     },
     methods: {
       addToken() {
