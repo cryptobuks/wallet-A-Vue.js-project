@@ -56,7 +56,7 @@
             walletList.push({
               tokenName: val.tokenName,
               address: val.tokenAddress,
-              balance: Web3Util.getTokenBalance(_this.walletAddress, val.tokenAddress),
+              balance: Web3Util.getTokenBalance(val.tokenAddress),
             });
           });
           _this.wallet = walletList;
