@@ -4,8 +4,8 @@ import mtConfig from './constants/MythereWalletConfig'
 import Tx from 'ethereumjs-tx'
 import {Toast} from 'mint-ui'
 // import {MessageBox} from 'mint-ui';
-import Web3 from 'web3';
 
+let Web3 = require("web3");
 let web3 = new Web3(new Web3.providers.HttpProvider('https://api.myetherapi.com/eth'));
 
 let Web3Util = {
