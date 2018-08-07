@@ -5,7 +5,10 @@
         <mt-button icon="back">返回</mt-button>
       </div>
     </mt-header>
-    <iframe src="https://rinkeby.etherscan.io/address/0xf58610cc21b6568aee8b2c1af667dfdc94219057" frameborder="0" scrolling="auto" style="width: 100%" height="1000px"></iframe>
+    <iframe :src="iframeUrl" id="show-iframe" frameborder="0" scrolling="auto"
+            class="token-iframe">
+
+    </iframe>
     <mt-tabbar v-model="selected">
       <mt-tab-item id="Receive">
         <img slot="icon" src="../assets/logo.png">
@@ -27,6 +30,7 @@
       return {
         tokenAddress: "",
         selected: "",
+        iframeUrl: "",
       }
     },
     methods: {
@@ -41,17 +45,28 @@
         this.$router.push('/Home');
       }
 
-      this.tokenAddress = tokenAddress
+      this.iframeUrl = "https://rinkeby.etherscan.io/address/" + tokenAddress;
+      this.tokenAddress = tokenAddress;
+
     },
     watch: {
       selected() {
         this.$router.push({path: '/' + this.selected, query: {tokenAddress: this.tokenAddress}});
       }
-    }
+    },
+    mounted() {
+      const oIframe = document.getElementById('show-iframe');
+      const deviceWidth = document.documentElement.clientWidth;
+      const deviceHeight = document.documentElement.clientHeight;
+      oIframe.style.width = deviceWidth + 'px';
+      oIframe.style.height = deviceHeight + 'px';
+    },
   }
 
 
 </script>
 <style>
-
+  .token-iframe {
+    width: 100%;
+  }
 </style>
