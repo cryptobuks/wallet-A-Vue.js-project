@@ -1,8 +1,11 @@
 import abi from './constants/Abi'
 import mtHttpUtil from './MyetherwalletHttpUtils'
 import mtConfig from './constants/MythereWalletConfig'
+import Tx from 'ethereumjs-tx'
+import {Toast} from 'mint-ui'
 
-let web3 = new Web3(new Web3.providers.HttpProvider('http://120.79.191.116:1443'));
+
+let web3 = new Web3(new Web3.providers.HttpProvider('https://api.myetherapi.com/eth'));
 
 let Web3Util = {
   instance: web3,
@@ -22,7 +25,6 @@ let Web3Util = {
   },
   getTokenBalance: function (tokenAddress) {
     let contract = this.getTokenContact(tokenAddress);
-    // return (contract.balanceOf(localStorage.getItem('walletAddress')).toNumber() / Math.pow(10, contract.decimals().toNumber())).toFixed(4);
     return mtHttpUtil.post("/api", {
       action: "eth_call",
       apikey: mtConfig.apiKey,
@@ -42,9 +44,71 @@ let Web3Util = {
       module: "proxy",
       to: tokenAddress,
     }).then(function (res) {
-      console.log(web3.asciiToHex(res.result));
-      return web3.toAscii(res.result).toString()
+      // console.log(web3.asciiToHex(res.result));
+      return 'eth'
     });
+  },
+  sendTransaction: function (tokenAddress, receiveWalletAddress, sendAmount) {
+    let contract = this.getTokenContact(tokenAddress);
+
+    let privateKey = new Buffer('0326c8205f5efeb17e0cf6fb6b46af7a495c9a3ab280cbf329af9008714d38b2', 'hex');
+
+    let rawTx = {
+      nonce: "",
+      gasPrice: "",
+      gasLimit: '0x441c4f',
+      to: tokenAddress,
+      value: '0x00',
+      data: contract.transfer.getData(receiveWalletAddress, sendAmount),
+      chainId: 4
+    };
+
+    return mtHttpUtil.post("/api", {
+      action: "eth_estimateGas",
+      apikey: mtConfig.apiKey,
+      module: "proxy",
+      from: localStorage.getItem('walletAddress'),
+      to: tokenAddress,
+      value: '0x00',
+    }).then(function (res) {
+      mtHttpUtil.post("/api", {
+        action: "eth_gasPrice",
+        apikey: mtConfig.apiKey,
+        module: "proxy",
+      }).then(function (res) {
+        rawTx.gasPrice = res.result;
+
+        mtHttpUtil.post("/api", {
+          action: "eth_getTransactionCount",
+          address: localStorage.getItem('walletAddress'),
+          apikey: mtConfig.apiKey,
+          module: "proxy",
+          tag: "latest",
+        }).then(function (res) {
+          rawTx.nonce = res.result;
+
+          console.log(rawTx);
+
+          let tx = new Tx(rawTx);
+          tx.sign(privateKey);
+
+          let serializedTx = tx.serialize();
+
+          return mtHttpUtil.post("/api", {
+            action: "eth_sendRawTransaction",
+            apikey: mtConfig.apiKey,
+            hex: '0x' + serializedTx.toString('hex'),
+            module: "proxy",
+          }).then(function (res) {
+            Toast('交易成功');
+            return res;
+          });
+
+        });
+      });
+    });
+
+
   },
 };
 export default Web3Util;

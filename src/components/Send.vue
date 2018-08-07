@@ -35,7 +35,7 @@
 
       return {
         originTokenBalance: "",
-        receiveAddress: "",
+        receiveAddress: "0x3E32Fe42434A039ad630C4cf67e5378a9aAe6e36",
         tokenAddress: this.$route.query.tokenAddress,
         tokenBalance: "",
         symbol: "",
@@ -51,26 +51,15 @@
         this.tokenBalance = originAmount - this.sendAmount;
       },
       sendTransfer() {
+        let _this = this;
         if (this.receiveAddress == null || this.receiveAddress === "") {
           Toast('请输入收款地址');
+          return;
         }
-        MessageBox.prompt('请输入密码').then(({value, action}) => {
-          let web3 = Web3Util.instance;
-          let walletAddress = localStorage.getItem('walletAddress');
-          web3.eth.defaultAccount = walletAddress;
-          web3.personal.unlockAccount(walletAddress, value, function (err, transactionHash) {
-            if (!err)
-              console.log('unlockAccount:' + transactionHash);
-            else
-              console.log('unlockAccount:' + err);
-          });
-          web3.eth.defaultAccount = walletAddress;
-          let contract = Web3Util.getTokenContact(this.tokenAddress);
-          contract.transfer(this.receiveAddress, this.sendAmount, function (err, transactionHash) {
-            if (!err)
-              console.log('transfer:' + transactionHash);
-            else
-              console.log('transfer:' + err);
+
+        return Web3Util.sendTransaction(this.tokenAddress, this.receiveAddress, this.sendAmount).then(function (res) {
+          Web3Util.getBalance().then(function (res) {
+            _this.balance = res;
           });
         });
       }
