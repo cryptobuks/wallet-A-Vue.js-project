@@ -5,6 +5,7 @@
         <mt-button icon="back">返回</mt-button>
       </div>
     </mt-header>
+    <iframe src="https://rinkeby.etherscan.io/address/0xf58610cc21b6568aee8b2c1af667dfdc94219057" frameborder="0" scrolling="auto" style="width: 100%" height="1000px"></iframe>
     <mt-tabbar v-model="selected">
       <mt-tab-item id="Receive">
         <img slot="icon" src="../assets/logo.png">

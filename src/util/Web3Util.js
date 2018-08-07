@@ -3,7 +3,8 @@ import mtHttpUtil from './MyetherwalletHttpUtils'
 import mtConfig from './constants/MythereWalletConfig'
 import Tx from 'ethereumjs-tx'
 import {Toast} from 'mint-ui'
-
+// import {MessageBox} from 'mint-ui';
+import Web3 from 'web3';
 
 let web3 = new Web3(new Web3.providers.HttpProvider('https://api.myetherapi.com/eth'));
 
@@ -32,7 +33,7 @@ let Web3Util = {
       module: "proxy",
       to: tokenAddress,
     }).then(function (res) {
-      return parseInt(res.result, 16);
+      return parseInt(res.result, 16) / Math.pow(10, 4);
     });
   },
   getSymbol: function (tokenAddress) {
@@ -48,10 +49,10 @@ let Web3Util = {
       return 'eth'
     });
   },
-  sendTransaction: function (tokenAddress, receiveWalletAddress, sendAmount) {
+  sendTransaction: function (priviteKey, tokenAddress, receiveWalletAddress, sendAmount) {
     let contract = this.getTokenContact(tokenAddress);
 
-    let privateKey = new Buffer('0326c8205f5efeb17e0cf6fb6b46af7a495c9a3ab280cbf329af9008714d38b2', 'hex');
+    let privateKey = new Buffer(priviteKey, 'hex');
 
     let rawTx = {
       nonce: "",
@@ -59,7 +60,7 @@ let Web3Util = {
       gasLimit: '0x441c4f',
       to: tokenAddress,
       value: '0x00',
-      data: contract.transfer.getData(receiveWalletAddress, sendAmount),
+      data: contract.transfer.getData(receiveWalletAddress, sendAmount * Math.pow(10, 4)),
       chainId: 4
     };
 

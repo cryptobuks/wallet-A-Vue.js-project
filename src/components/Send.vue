@@ -35,7 +35,7 @@
 
       return {
         originTokenBalance: "",
-        receiveAddress: "0x3E32Fe42434A039ad630C4cf67e5378a9aAe6e36",
+        receiveAddress: "",
         tokenAddress: this.$route.query.tokenAddress,
         tokenBalance: "",
         symbol: "",
@@ -48,7 +48,7 @@
       },
       calculate() {
         let originAmount = this.originTokenBalance;
-        this.tokenBalance = originAmount - this.sendAmount;
+        this.tokenBalance = (originAmount - this.sendAmount).toFixed(4);
       },
       sendTransfer() {
         let _this = this;
@@ -56,12 +56,23 @@
           Toast('请输入收款地址');
           return;
         }
-
-        return Web3Util.sendTransaction(this.tokenAddress, this.receiveAddress, this.sendAmount).then(function (res) {
-          Web3Util.getBalance().then(function (res) {
-            _this.balance = res;
+        if (localStorage.getItem('walletPrivateKey') == null) {
+          MessageBox.prompt('请输入私钥').then(({value, action}) => {
+            localStorage.setItem('walletPrivateKey', value);
+            return Web3Util.sendTransaction(value, this.tokenAddress, this.receiveAddress, this.sendAmount).then(function (res) {
+              Web3Util.getBalance().then(function (res) {
+                _this.balance = res;
+              });
+            });
           });
-        });
+        } else {
+          return Web3Util.sendTransaction(localStorage.getItem('walletPrivateKey'), this.tokenAddress, this.receiveAddress, this.sendAmount).then(function (res) {
+            Web3Util.getBalance().then(function (res) {
+              _this.balance = res;
+            });
+          });
+        }
+
       }
     }, computed: {
       gasValue: {
