@@ -33,5 +33,18 @@ let Web3Util = {
       return parseInt(res.result, 16);
     });
   },
+  getSymbol: function (tokenAddress) {
+    let contract = this.getTokenContact(tokenAddress);
+    return mtHttpUtil.post("/api", {
+      action: "eth_call",
+      apikey: mtConfig.apiKey,
+      data: contract.symbol.getData(),
+      module: "proxy",
+      to: tokenAddress,
+    }).then(function (res) {
+      console.log(web3.asciiToHex(res.result));
+      return web3.toAscii(res.result).toString()
+    });
+  },
 };
 export default Web3Util;

@@ -32,13 +32,13 @@
   export default {
     name: "Send",
     data() {
-      let tokenAddress = this.$route.query.tokenAddress;
 
       return {
+        originTokenBalance: "",
         receiveAddress: "",
-        tokenAddress: tokenAddress,
-        tokenBalance: Web3Util.getTokenBalance(tokenAddress),
-        symbol: Web3Util.getTokenContact(tokenAddress).symbol(),
+        tokenAddress: this.$route.query.tokenAddress,
+        tokenBalance: "",
+        symbol: "",
         sendAmount: 0,
         rangeValue: 13,
       }
@@ -47,11 +47,10 @@
         this.$router.go(-1)
       },
       calculate() {
-        let originAmount = Web3Util.getTokenBalance(this.tokenAddress);
+        let originAmount = this.originTokenBalance;
         this.tokenBalance = originAmount - this.sendAmount;
       },
       sendTransfer() {
-        console.log(this.receiveAddress);
         if (this.receiveAddress == null || this.receiveAddress === "") {
           Toast('请输入收款地址');
         }
@@ -83,6 +82,19 @@
         set: function () {
         }
       }
+    }, created() {
+      let _this = this;
+      let tokenAddress = _this.tokenAddress;
+
+      Web3Util.getTokenBalance(tokenAddress).then(function (res) {
+        console.log(res);
+        _this.tokenBalance = res;
+        _this.originTokenBalance = res;
+      });
+
+      Web3Util.getSymbol(tokenAddress).then(function (o) {
+        _this.symbol = o;
+      });
     }
   }
 </script>
