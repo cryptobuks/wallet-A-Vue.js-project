@@ -1,9 +1,9 @@
 <template>
   <div class="page-part">
     <mt-header fixed title="感恩钱包">
-      <div @click="goBack()" slot="left">
+      <router-link to="/Home" slot="left">
         <mt-button icon="back">返回</mt-button>
-      </div>
+      </router-link>
     </mt-header>
     <mt-radio
       :max="1"
@@ -34,6 +34,14 @@
       const _this = this;
       TGCoinHttpUtils.post("/wallet/api/walletList", {})
         .then(function (res) {
+          console.log(res.length);
+          if (res.length === 0) {
+            MessageBox.confirm("还没创建钱包，现在去创建？").then(action => {
+              _this.$router.push("/WalletAdd");
+            });
+            return;
+          }
+
           res.forEach(function (row) {
             let obj = {
               label: row.walletName,

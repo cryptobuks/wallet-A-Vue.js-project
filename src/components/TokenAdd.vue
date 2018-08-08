@@ -6,6 +6,12 @@
       </router-link>
     </mt-header>
     <mt-field placeholder="请输入合约地址" v-model="tokenAddress"></mt-field>
+
+    <mt-radio
+      title="推荐合约地址："
+      v-model="selectAddress"
+      :options="addressOptions">
+    </mt-radio>
     <mt-button type="primary" size="large" class="add-button" @click="addToken">添加</mt-button>
   </div>
 </template>
@@ -16,7 +22,14 @@
   export default {
     data() {
       return {
-        tokenAddress: ""
+        tokenAddress: "",
+        selectAddress: "",
+        addressOptions: [
+          {
+            label: '感恩链（Tgc）',
+            value: '0xCc79Cb5023A4896547F4b00a2289d1ed4098Ce13',
+          }
+        ]
       }
     },
     methods: {
@@ -32,6 +45,16 @@
           });
         });
 
+      }
+    },
+    watch: {
+      selectAddress() {
+        this.tokenAddress = this.selectAddress;
+      },
+      tokenAddress() {
+        if (this.tokenAddress !== this.selectAddress) {
+          this.selectAddress = "";
+        }
       }
     }
   }

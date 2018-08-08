@@ -62,6 +62,8 @@
   .text {
     width: 90%;
     height: 300px;
+    border: #0b1929;
+    border-width: 20px;
   }
 
   .cotainer {

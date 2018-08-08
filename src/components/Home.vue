@@ -25,7 +25,7 @@
       </mt-tab-item>
       <mt-tab-item id="hot">
         <img slot="icon" src="../assets/logo.png">
-        热点
+        市场
       </mt-tab-item>
       <mt-tab-item id="my">
         <img slot="icon" src="../assets/logo.png">

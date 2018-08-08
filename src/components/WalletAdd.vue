@@ -68,7 +68,6 @@
         }
 
         if (isSuccess) {
-          Toast("钱包生成中，请耐心等待...");
           let walletGenerateRes = Web3Util.walletgenerate();
           inputMap['address'] = walletGenerateRes.getAddressString();
 

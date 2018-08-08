@@ -41,7 +41,7 @@
           balance: "",
           address: "",
         }],
-        walletBalance: "",
+        walletBalance: "0",
         screen: "width:" + document.body.clientWidth + "px;" + "height:" + document.body.clientHeight / 3 + "px"
       }
         ;
@@ -50,10 +50,10 @@
       let walletList = [];
 
       if (this.walletAddress === null || this.walletAddress === "") {
-        MessageBox.confirm("还没选中钱包，现在去选择？").then(action => {
+        MessageBox.alert("还没选中钱包，现在去选择？").then(action => {
           _this.$router.push("/WalletConfig");
         });
-        return;
+        return false;
       }
 
       TGCoinHttpUtils.post("/walletToken/api/WalletTokenList", {})
@@ -84,7 +84,10 @@
     components: {},
     computed: {
       address() {
-        return "钱包地址：" + this.walletAddress.substring(0, 10) + "****";
+        if (this.walletAddress !== null)
+          return "钱包地址：" + this.walletAddress.substring(0, 10) + "****";
+        else
+          return "钱包地址：暂无"
       },
     },
     methods: {

@@ -70,7 +70,7 @@
             localStorage.removeItem('walletPrivateKey');
             localStorage.removeItem('walletName');
             localStorage.removeItem('walletAddress');
-            router.push("/Home");
+            router.push("/WalletConfig");
           })
         }
       },
