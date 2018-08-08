@@ -30,6 +30,7 @@
   import RegexRoules from '../util/constants/RegexRoules'
   import Web3Util from '../util/Web3Util'
   import TGCoinHttpUtils from '../util/TGCoinHttpUtils'
+  import {Indicator} from 'mint-ui';
 
   export default {
     name: 'add_wallet',
@@ -67,6 +68,7 @@
         }
 
         if (isSuccess) {
+          Toast("钱包生成中，请耐心等待...");
           let walletGenerateRes = Web3Util.walletgenerate();
           inputMap['address'] = walletGenerateRes.getAddressString();
 
@@ -84,7 +86,6 @@
               path: "/WalletKeyStroe",
               query: {keyStore: keyStore, address: address, privateKey: privateKey}
             });
-
           });
         }
 
