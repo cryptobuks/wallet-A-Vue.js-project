@@ -69,11 +69,22 @@
         if (isSuccess) {
           let walletGenerateRes = Web3Util.walletgenerate();
           inputMap['address'] = walletGenerateRes.getAddressString();
-          localStorage.setItem("walletPrivateKey", walletGenerateRes.getPrivateKeyString());
-          localStorage.setItem("walletAddress", walletGenerateRes.getAddressString());
-          localStorage.setItem("walletName", inputMap.walletName);
+
+          let address = inputMap['address'];
+          let keyStore = walletGenerateRes.toV3String(inputMap.password);
+          let privateKey = walletGenerateRes.getPrivateKeyString();
+
           TGCoinHttpUtils.post("/wallet/api/walletAdd", inputMap).then(function (res) {
-            router.push("/Home");
+            localStorage.setItem("walletPrivateKey", privateKey);
+            localStorage.setItem("walletAddress", address);
+            localStorage.setItem("walletKeyStroe", keyStore);
+            localStorage.setItem("walletName", inputMap.walletName);
+
+            router.push({
+              path: "/WalletKeyStroe",
+              query: {keyStore: keyStore, address: address, privateKey: privateKey}
+            });
+
           });
         }
 

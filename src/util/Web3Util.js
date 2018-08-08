@@ -5,11 +5,12 @@ import Tx from 'ethereumjs-tx'
 import {Toast} from 'mint-ui'
 import Web3 from "web3";
 import Wallet from '../util/Myetherwallet';
-
-
 import {MessageBox} from 'mint-ui';
 
+
 let web3 = new Web3(new Web3.providers.HttpProvider('https://api.myetherapi.com/eth'));
+let ethUtil = require('ethereumjs-util');
+ethUtil.crypto = require('crypto');
 
 let Web3Util = {
   instance: web3,
@@ -26,6 +27,12 @@ let Web3Util = {
   },
   walletgenerate: function () {
     return Wallet.generate(false);
+  },
+  toV3String: function (password) {
+    return Wallet.toV3String(password, {
+      kdf: "scrypt",
+      n: 8192
+    });
   },
   getTokenContact: function (tokenAddress) {
     return web3.eth.contract(abi).at(tokenAddress);
@@ -53,6 +60,18 @@ let Web3Util = {
     }).then(function (res) {
       // console.log(web3.asciiToHex(res.result));
       return 'eth'
+    });
+  },
+  getName: function (tokenAddress) {
+    let contract = this.getTokenContact(tokenAddress);
+    return mtHttpUtil.post("/api", {
+      action: "eth_call",
+      apikey: mtConfig.apiKey,
+      data: contract.name.getData(),
+      module: "proxy",
+      to: tokenAddress,
+    }).then(function (res) {
+      return web3.toAscii(res.result);
     });
   },
   sendTransaction: function (priviteKey, tokenAddress, receiveWalletAddress, sendAmount) {

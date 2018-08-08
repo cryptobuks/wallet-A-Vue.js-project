@@ -8,11 +8,11 @@
 
     <div>
       收款地址
-      <p class="address-font-size">{{tokenAddress}}</p>
+      <p class="address-font-size">{{walletAddress}}</p>
       <mt-button type="default" @click="doCopy">复制</mt-button>
     </div>
     <div>
-      <qrcode-vue :value="tokenAddress" :size="150" style="margin-top: 10%" level="H"></qrcode-vue>
+      <qrcode-vue :value="walletAddress" :size="150" style="margin-top: 10%" level="H"></qrcode-vue>
     </div>
   </div>
 </template>
@@ -24,7 +24,8 @@
     name: "Receive",
     data() {
       return {
-        tokenAddress: this.$route.query.tokenAddress
+        tokenAddress: this.$route.query.tokenAddress,
+        walletAddress: localStorage.getItem("walletAddress")
       }
     }, methods: {
       goBack() {
@@ -32,7 +33,7 @@
       },
       doCopy: function () {
         let _this = this;
-        _this.$copyText(_this.tokenAddress).then(function (e) {
+        _this.$copyText(_this.walletAddress).then(function (e) {
           Toast({
             message: '复制成功',
             position: 'bottom',

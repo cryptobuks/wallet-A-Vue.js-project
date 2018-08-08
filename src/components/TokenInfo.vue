@@ -45,7 +45,7 @@
         this.$router.push('/Home');
       }
 
-      this.iframeUrl = "https://rinkeby.etherscan.io/address/" + tokenAddress;
+      this.iframeUrl = "https://rinkeby.etherscan.io/token/" + tokenAddress + "?a=" + localStorage.getItem("walletAddress");
       this.tokenAddress = tokenAddress;
 
     },
