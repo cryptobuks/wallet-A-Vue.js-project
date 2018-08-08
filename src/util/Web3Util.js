@@ -3,9 +3,12 @@ import mtHttpUtil from './MyetherwalletHttpUtils'
 import mtConfig from './constants/MythereWalletConfig'
 import Tx from 'ethereumjs-tx'
 import {Toast} from 'mint-ui'
-// import {MessageBox} from 'mint-ui';
+import Web3 from "web3";
+import Wallet from '../util/Myetherwallet';
 
-let Web3 = require("web3");
+
+import {MessageBox} from 'mint-ui';
+
 let web3 = new Web3(new Web3.providers.HttpProvider('https://api.myetherapi.com/eth'));
 
 let Web3Util = {
@@ -20,6 +23,9 @@ let Web3Util = {
     }).then(function (res) {
       return web3.fromWei(res.result, 'ether');
     });
+  },
+  walletgenerate: function () {
+    return Wallet.generate(false);
   },
   getTokenContact: function (tokenAddress) {
     return web3.eth.contract(abi).at(tokenAddress);

@@ -27,8 +27,7 @@
       return {};
     }, methods: {
       logout() {
-        localStorage.removeItem('uid');
-        localStorage.removeItem('token');
+        localStorage.clear();
         this.$router.push('/Login');
       }
     },

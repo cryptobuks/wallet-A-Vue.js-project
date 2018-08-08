@@ -12,6 +12,9 @@
       v-model="wallet"
       :options="addressOptions">
     </mt-radio>
+    <router-link to="/WalletAdd">
+      <mt-button size="large">新建钱包</mt-button>
+    </router-link>
   </div>
 </template>
 <script>
@@ -23,7 +26,7 @@
     name: 'asset',
     data() {
       return {
-        wallet: "",
+        wallet: localStorage.getItem("walletAddress"),
         addressOptions: [],
         screen: "width:" + document.body.clientWidth + "px;" + "height:" + document.body.clientHeight / 3 + "px",
       };
@@ -35,6 +38,7 @@
             let obj = {
               label: row.walletName,
               value: row.walletAddress,
+              selected: true
             };
             _this.addressOptions.push(obj);
           })
@@ -53,7 +57,7 @@
         MessageBox.confirm('确定要切换钱包吗?').then(action => {
           localStorage.setItem("walletAddress", _this.wallet);
           _this.addressOptions.forEach(function (key) {
-            if(key.value ===_this.wallet){
+            if (key.value === _this.wallet) {
               localStorage.setItem("walletName", key.label)
             }
           });

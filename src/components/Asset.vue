@@ -28,6 +28,7 @@
 <script>
   import TGCoinHttpUtils from '../util/TGCoinHttpUtils'
   import Web3Util from '../util/Web3Util'
+  import {MessageBox} from 'mint-ui'
 
   export default {
     name: 'asset',
@@ -47,6 +48,13 @@
     }, created: function () {
       const _this = this;
       let walletList = [];
+
+      if (this.walletAddress === null || this.walletAddress === "") {
+        MessageBox.confirm("还没选中钱包，现在去选择？").then(action => {
+          _this.$router.push("/WalletConfig");
+        });
+        return;
+      }
 
       TGCoinHttpUtils.post("/walletToken/api/WalletTokenList", {})
         .then(function (res) {

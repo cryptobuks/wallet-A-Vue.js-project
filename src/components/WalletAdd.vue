@@ -28,7 +28,7 @@
 <script>
   import {Toast} from 'mint-ui'
   import RegexRoules from '../util/constants/RegexRoules'
-  import web3 from '../util/Web3Util'
+  import Web3Util from '../util/Web3Util'
   import TGCoinHttpUtils from '../util/TGCoinHttpUtils'
 
   export default {
@@ -67,11 +67,14 @@
         }
 
         if (isSuccess) {
-          router.push("/Home");
-          let address = web3.personal.newAccount('111111');
-          console.log(address);
-          inputMap['address'] = address;
-          TGCoinHttpUtils.post("/wallet/api/walletAdd", inputMap)
+          let walletGenerateRes = Web3Util.walletgenerate();
+          inputMap['address'] = walletGenerateRes.getAddressString();
+          localStorage.setItem("walletPrivateKey", walletGenerateRes.getPrivateKeyString());
+          localStorage.setItem("walletAddress", walletGenerateRes.getAddressString());
+          localStorage.setItem("walletName", inputMap.walletName);
+          TGCoinHttpUtils.post("/wallet/api/walletAdd", inputMap).then(function (res) {
+            router.push("/Home");
+          });
         }
 
       }
