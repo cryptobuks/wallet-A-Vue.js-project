@@ -2,7 +2,7 @@
   <div class="page-part">
     <div class="asset-header" :style="screen">
       <div class="asset-address">
-        <H1>{{walletName}}</H1>
+        <H1 @click="alterName">{{walletName}}</H1>
         <p></p>
         {{address}}
         <p>Eth资产：{{walletBalance}}</p>
@@ -96,6 +96,11 @@
       },
       goToTokenInfo(address) {
         this.$router.push({path: "/TokenInfo", query: {tokenAddress: address}});
+      },
+      alterName() {
+        MessageBox.prompt("修改钱包名字").then(({value, action}) => {
+
+        });
       }
     }
   }

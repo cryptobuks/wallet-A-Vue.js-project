@@ -19,7 +19,6 @@
 </template>
 <script>
   import TGCoinHttpUtils from '../util/TGCoinHttpUtils'
-  import web3 from '../util/Web3Util'
   import {MessageBox} from 'mint-ui';
 
   export default {
