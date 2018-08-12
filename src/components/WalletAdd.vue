@@ -78,7 +78,6 @@
           inputMap['address'] = address;
 
           TGCoinHttpUtils.post("/wallet/api/walletAdd", inputMap).then(function (res) {
-            localStorage.setItem("walletPrivateKey", privateKey);
             localStorage.setItem("walletAddress", address);
             localStorage.setItem("walletKeyStroe", keyStore);
             localStorage.setItem("walletName", inputMap.walletName);

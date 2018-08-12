@@ -35,7 +35,7 @@
 
       return {
         originTokenBalance: "",
-        receiveAddress: "",
+        receiveAddress: "0x3E32Fe42434A039ad630C4cf67e5378a9aAe6e36",
         tokenAddress: this.$route.query.tokenAddress,
         tokenBalance: "",
         symbol: "",
@@ -56,21 +56,21 @@
           Toast('请输入收款地址');
           return;
         }
-        if (localStorage.getItem('walletPrivateKey') == null) {
-          MessageBox.prompt('请输入私钥').then(({value, action}) => {
-            localStorage.setItem('walletPrivateKey', value);
-            return Web3Util.sendTransaction(value, this.tokenAddress, this.receiveAddress, this.sendAmount).then(function (res) {
+        if (localStorage.getItem('walletKeyStroe') == null) {
+          MessageBox.confirm('未选择钱包，是否去选择？').then(({value, action}) => {
+            this.$router.push("/WalletConfig")
+          });
+        } else {
+          MessageBox.prompt('请输入交易密码').then(({value, action}) => {
+            let privateKey = Web3Util.decryptWallet(value);
+
+            return Web3Util.sendTransaction(privateKey, this.tokenAddress, this.receiveAddress, this.sendAmount).then(function (res) {
               Web3Util.getBalance().then(function (res) {
                 _this.balance = res;
               });
             });
           });
-        } else {
-          return Web3Util.sendTransaction(localStorage.getItem('walletPrivateKey'), this.tokenAddress, this.receiveAddress, this.sendAmount).then(function (res) {
-            Web3Util.getBalance().then(function (res) {
-              _this.balance = res;
-            });
-          });
+
         }
 
       }

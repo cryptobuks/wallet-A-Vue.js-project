@@ -65,11 +65,9 @@
 
         if (isSuccess) {
           TGCoinHttpUtils.post('/user/api/register', this.input).then(function (res) {
+            localStorage.clear();
             localStorage.setItem('uid', res.uid);
             localStorage.setItem('token', res.token);
-            localStorage.removeItem('walletPrivateKey');
-            localStorage.removeItem('walletName');
-            localStorage.removeItem('walletAddress');
             router.push("/WalletConfig");
           })
         }

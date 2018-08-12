@@ -74,6 +74,20 @@ let Web3Util = {
       return web3.toAscii(res.result);
     });
   },
+  decryptWallet(password) {
+    console.log(localStorage.getItem('walletKeyStroe'));
+    try {
+      let res = Wallet.getWalletFromPrivKeyFile(localStorage.getItem('walletKeyStroe'), password);
+      console.log(res);
+      let privKey = res.privKey.toString('hex');
+      console.log(privKey);
+      return privKey;
+    } catch (e) {
+      Toast('解密失败');
+      console.log(e);
+      return null;
+    }
+  },
   sendTransaction: function (priviteKey, tokenAddress, receiveWalletAddress, sendAmount) {
     let contract = this.getTokenContact(tokenAddress);
 
@@ -126,7 +140,16 @@ let Web3Util = {
             hex: '0x' + serializedTx.toString('hex'),
             module: "proxy",
           }).then(function (res) {
-            Toast('交易成功');
+            console.log(res);
+            if (res.error != null && res.error.code && res.error.code < 0) {
+              let instance = Toast('交易失败:' + res.error.message);
+              setTimeout(() => {
+                instance.close();
+              }, 3000);
+            } else {
+              Toast('交易成功');
+            }
+
             return res;
           });
 
